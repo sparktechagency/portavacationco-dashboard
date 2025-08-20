@@ -18,11 +18,11 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("refreshToken");
-    sessionStorage.removeItem("authToken");
-    sessionStorage.removeItem("refreshToken");
-    Cookies.remove("refreshToken");
+    localStorage.removeItem("portavacationcoAdminAuthToken");
+    localStorage.removeItem("portavacationcoAdminRefreshToken");
+    sessionStorage.removeItem("portavacationcoAdminAuthToken");
+    sessionStorage.removeItem("portavacationcoAdminRefreshToken");
+    Cookies.remove("portavacationcoAdminRefreshToken");
     navigate("/auth/login");
   };
 

@@ -5,11 +5,11 @@ import Cookies from "js-cookie";
 // Enhanced base query to handle token refresh
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
-    // baseUrl: "http://192.168.10.8:5001/api/v1",
+    baseUrl: "http://10.10.7.107:5004/api/v1",
     prepareHeaders: (headers) => {
       const token =
-        localStorage.getItem("authToken") ||
-        sessionStorage.getItem("authToken");
+        localStorage.getItem("portavacationcoAdminAuthToken") ||
+        sessionStorage.getItem("portavacationcoAdminAuthToken");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -17,7 +17,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     },
   });
 
-  const refreshToken = Cookies.get("refreshToken");
+  const refreshToken = Cookies.get("portavacationcoAdminRefreshToken");
 
   // Make the original request
   let result = await baseQuery(args, api, extraOptions);
@@ -27,7 +27,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   // If the access token is expired, handle token refresh
   if (result.error) {
-    if (result.error.status === 500) {
+    if (result.error.status === 401) {
       // Call the refresh token API
       const refreshResult = await baseQuery(
         {
@@ -43,9 +43,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
       if (refreshResult?.data?.data) {
         // Save the new access token to localStorage
-        localStorage.removeItem("authToken");
+        localStorage.removeItem("portavacationcoAdminAuthToken");
         localStorage.setItem(
-          "authToken",
+          "portavacationcoAdminAuthToken",
           refreshResult?.data?.data?.accessToken
         );
 
@@ -54,10 +54,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       } else {
         // Refresh token failed or expired, log out the user
         console.error("Refresh token invalid or expired. Logging out...");
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("authToken");
-        sessionStorage.removeItem("refreshToken");
+        localStorage.removeItem("portavacationcoAdminAuthToken");
+        localStorage.removeItem("portavacationcoAdminRefreshToken");
+        sessionStorage.removeItem("portavacationcoAdminAuthToken");
+        sessionStorage.removeItem("portavacationcoAdminRefreshToken");
         toast("Access token has expired, Please login again.");
         window.location.replace("/auth/login");
       }
@@ -77,9 +77,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Banner", "AdminData"],
+  tagTypes: ["Banner", "AdminData", "Blog"],
   endpoints: () => ({}),
 });
 
 // Export the image URL as a constant
-export const imageUrl = "http://206.189.231.81:5000";
+export const imageUrl = "http://10.10.7.107:5004/";

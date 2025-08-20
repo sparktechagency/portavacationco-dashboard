@@ -2,43 +2,48 @@ import { Checkbox, Form, Input } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormItem from "../../components/common/FormItem";
-import { useLoginMutation } from "../../redux/apiSlices/authSlice";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { useLoginMutation } from "../../redux/apiSlices/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
+  const [rememberMe, setRememberMe] = useState(false); // Track checkbox state
 
-  // const [login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const onFinish = async (values) => {
     try {
-      // console.log(values);
-      // const response = await login(values).unwrap();
-      // const { accessToken } = response?.data;
-      // const { refreshToken } = response?.data;
+      console.log(values);
+      const response = await login(values).unwrap();
 
-      if (values) {
-        // localStorage.setItem("authToken", accessToken);
-        // localStorage.setItem("refreshToken", refreshToken);
-        // Cookies.set("refreshToken", refreshToken);
+      if (response?.success) {
+        const { accessToken } = response?.data;
+        const { refreshToken } = response?.data;
+
+        if (rememberMe) {
+          localStorage.setItem("portavacationcoAdminAuthToken", accessToken);
+          localStorage.setItem(
+            "portavacationcoAdminRefreshToken",
+            refreshToken
+          );
+          Cookies.set("portavacationcoAdminRefreshToken", refreshToken);
+        } else {
+          sessionStorage.setItem("portavacationcoAdminAuthToken", accessToken);
+          sessionStorage.setItem(
+            "portavacationcoAdminRefreshToken",
+            refreshToken
+          );
+          Cookies.set("portavacationcoAdminRefreshToken", refreshToken);
+        }
+
+        navigate("/");
+        toast.success("Login successful!");
       } else {
-        // sessionStorage.setItem("authToken", accessToken);
-        // localStorage.setItem("refreshToken", refreshToken);
-        // Cookies.set("refreshToken", refreshToken);
+        toast.error(response?.message || "An error occurred");
       }
-
-      navigate("/");
-      toast.success("Login successful!");
     } catch (error) {
-      toast.error(error || "An error occurred", {
-        style: {
-          fontSize: "18px",
-          padding: "20px",
-          maxWidth: "600px",
-        },
-      });
+      toast.error(error || "An error occurred");
     }
   };
 

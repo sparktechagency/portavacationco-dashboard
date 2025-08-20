@@ -95,12 +95,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/auth/get-profile",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
+          url: "/users/my-profile",
         };
       },
       providesTags: ["AdminData"],
@@ -113,7 +108,7 @@ const authSlice = api.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/admin/profile",
+          url: "/users/my-profile",
         };
       },
     }),

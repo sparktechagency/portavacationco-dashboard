@@ -104,15 +104,15 @@
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #6dbd44;
+  background: #3b3e3f;
 }
 
 /* pagination style */
 .ant-pagination-item-active a {
   color: white !important;
-  background-color: #6dbd44 !important;
+  background-color: #3b3e3f !important;
 }
 
 .ant-switch-checked {
-  background-color: #6dbd44 !important;
+  background-color: #3b3e3f !important;
 }
