@@ -12,6 +12,16 @@ const blogSlice = api.injectEndpoints({
       providesTags: ["Blog"],
     }),
 
+    getBlogById: builder.query({
+      query: (id) => {
+        return {
+          method: "GET",
+          url: `/blog/${id}`,
+        };
+      },
+      providesTags: ["Blog"],
+    }),
+
     createBlog: builder.mutation({
       query: (data) => {
         return {
@@ -32,11 +42,25 @@ const blogSlice = api.injectEndpoints({
       },
       invalidatesTags: ["Blog"],
     }),
+
+    updateBlog: builder.mutation({
+      query: ({ id, data }) => {
+        console.log("formData", data);
+        return {
+          method: "PATCH",
+          url: `/blog/${id}`,
+          body: data,
+        };
+      },
+      invalidatesTags: ["Blog"],
+    }),
   }),
 });
 
 export const {
   useGetAllBlogQuery,
+  useGetBlogByIdQuery,
   useCreateBlogMutation,
   useDeleteBlogMutation,
+  useUpdateBlogMutation,
 } = blogSlice;

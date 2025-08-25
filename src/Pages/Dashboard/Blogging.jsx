@@ -27,6 +27,7 @@ import { imageUrl } from "../../redux/api/baseApi";
 import { FaEye, FaTrash } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Blogging = () => {
   const { data: getAllBlogs, isLoading } = useGetAllBlogQuery();
@@ -48,18 +49,27 @@ const Blogging = () => {
   const blogsData = getAllBlogs?.data || [];
 
   const handleDelete = async (id) => {
-    try {
-      const res = await deleteBlog(id).unwrap();
+    Modal.confirm({
+      title: "Delete Blog",
+      content: "Are you sure you want to delete this blog?",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: async () => {
+        try {
+          const res = await deleteBlog(id).unwrap();
 
-      if (res?.success) {
-        toast.success(res?.message || "Blog deleted successfully");
-      } else {
-        toast.error(res?.message || "Failed to delete blog.");
-      }
-    } catch (error) {
-      console.error("Error deleting blog:", error);
-      toast.error("Failed to delete blog.");
-    }
+          if (res?.success) {
+            toast.success(res?.message || "Blog deleted successfully");
+          } else {
+            toast.error(res?.message || "Failed to delete blog.");
+          }
+        } catch (error) {
+          console.error("Error deleting blog:", error);
+          toast.error("Failed to delete blog.");
+        }
+      },
+    });
   };
 
   const columns = [
@@ -102,8 +112,9 @@ const Blogging = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <FaEye className="cursor-pointer w-5 h-5 text-blue-500" />
-          <FaEdit className="cursor-pointer w-5 h-5 text-green-500" />
+          <Link to={`/blog/${record._id}`}>
+            <FaEye className="cursor-pointer w-5 h-5 text-blue-500" />
+          </Link>
           <FaTrash
             className="cursor-pointer w-5 h-5 text-red-500"
             onClick={() => handleDelete(record._id)}

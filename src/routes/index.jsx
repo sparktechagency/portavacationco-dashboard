@@ -19,6 +19,7 @@ import OfferList from "../components/ui/Settings/OfferList";
 import Rental from "../Pages/Dashboard/Rental";
 import Bookings from "../Pages/Dashboard/Bookings";
 import Blogging from "../Pages/Dashboard/Blogging";
+import SingleBlog from "../Pages/Dashboard/SingleBlog";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/blogging",
         element: <Blogging />,
+      },
+      {
+        path: "/blog/:id",
+        element: <SingleBlog />,
       },
       {
         path: "/personal-information",

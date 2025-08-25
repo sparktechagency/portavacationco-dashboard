@@ -17,6 +17,11 @@ const Login = () => {
       console.log(values);
       const response = await login(values).unwrap();
 
+      if (response?.data?.user?.role !== "admin") {
+        toast.error("Only Admin can login");
+        return;
+      }
+
       if (response?.success) {
         const { accessToken } = response?.data;
         const { refreshToken } = response?.data;
