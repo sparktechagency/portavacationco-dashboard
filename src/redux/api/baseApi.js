@@ -5,7 +5,8 @@ import Cookies from "js-cookie";
 // Enhanced base query to handle token refresh
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
-    baseUrl: "http://10.10.7.107:5004/api/v1",
+    // baseUrl: "http://10.10.7.107:5004/api/v1",
+    baseUrl: "http://72.60.117.99:5004/api/v1",
     prepareHeaders: (headers) => {
       const token =
         localStorage.getItem("portavacationcoAdminAuthToken") ||
@@ -77,9 +78,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Banner", "AdminData", "Blog"],
+  tagTypes: ["Banner", "AdminData", "Blog", "CarCategory"],
   endpoints: () => ({}),
 });
 
 // Export the image URL as a constant
-export const imageUrl = "http://10.10.7.107:5004/";
+export const imageUrl = "http://72.60.117.99:5004/";

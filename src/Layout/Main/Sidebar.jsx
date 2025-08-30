@@ -36,7 +36,11 @@ const Sidebar = () => {
         </Link>
       ),
     },
-
+    {
+      key: "/car-category",
+      icon: <ImFolderUpload size={24} />,
+      label: <Link to="/car-category">Car Category</Link>,
+    },
     {
       key: "/rentals",
       icon: <PiUserPlus size={24} />,

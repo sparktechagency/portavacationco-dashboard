@@ -20,6 +20,7 @@ import Rental from "../Pages/Dashboard/Rental";
 import Bookings from "../Pages/Dashboard/Bookings";
 import Blogging from "../Pages/Dashboard/Blogging";
 import SingleBlog from "../Pages/Dashboard/SingleBlog";
+import CarCategory from "../Pages/Dashboard/CarCategory";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/car-category",
+        element: <CarCategory />,
       },
       {
         path: "/rentals",
