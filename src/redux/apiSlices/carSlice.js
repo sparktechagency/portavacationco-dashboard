@@ -12,6 +12,38 @@ const carSlice = api.injectEndpoints({
       providesTags: ["Car"],
     }),
 
+    addCar: builder.mutation({
+      query: (data) => {
+        return {
+          method: "POST",
+          url: "/car/create-car",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Car"],
+    }),
+
+    updateCar: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          method: "PATCH",
+          url: `/car/${id}`,
+          body: data,
+        };
+      },
+      invalidatesTags: ["Car"],
+    }),
+
+    deleteCar: builder.mutation({
+      query: (id) => {
+        return {
+          method: "DELETE",
+          url: `/car/${id}`,
+        };
+      },
+      invalidatesTags: ["Car"],
+    }),
+
     //car category
 
     getAllCarCategory: builder.query({
@@ -60,6 +92,11 @@ const carSlice = api.injectEndpoints({
 
 export const {
   useGetAllCarQuery,
+  useAddCarMutation,
+  useUpdateCarMutation,
+  useDeleteCarMutation,
+
+  //car category
   useGetAllCarCategoryQuery,
   useAddCarCategoryMutation,
   useUpdateCarCategoryMutation,

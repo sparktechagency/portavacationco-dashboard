@@ -6,14 +6,13 @@ import toast from "react-hot-toast";
 import { useChangePasswordMutation } from "../../redux/apiSlices/authSlice";
 
 const ChangePassword = () => {
-  const isLoading = false;
   const [form] = Form.useForm();
   const [errorMessages, setErrorMessages] = useState({
     newPassError: "",
     conPassError: "",
   });
 
-  // const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   if (isLoading) {
     return (
@@ -25,7 +24,7 @@ const ChangePassword = () => {
   const validatePasswordChange = (values) => {
     let errors = {};
 
-    if (values.currentPassword === values.newPassword) {
+    if (values.oldPassword === values.newPassword) {
       errors.newPassError = "The New password is similar to the old Password";
     }
 
@@ -64,7 +63,7 @@ const ChangePassword = () => {
         className="w-[50%] mx-auto mt-20"
       >
         <Form.Item
-          name="currentPassword"
+          name="oldPassword"
           label={<p>Current Password</p>}
           rules={[
             {

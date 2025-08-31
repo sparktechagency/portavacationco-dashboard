@@ -52,7 +52,7 @@ const authSlice = api.injectEndpoints({
     changePassword: builder.mutation({
       query: (value) => {
         return {
-          method: "POST",
+          method: "PATCH",
           url: "/auth/change-password",
           body: value,
         };
@@ -79,7 +79,7 @@ const authSlice = api.injectEndpoints({
       query: (data) => {
         return {
           method: "PATCH",
-          url: "/admin/profile",
+          url: "/users/update-my-profile",
           body: data,
           headers: {
             Authorization: `Bearer ${JSON.parse(

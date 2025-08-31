@@ -83,4 +83,5 @@ export const api = createApi({
 });
 
 // Export the image URL as a constant
+// export const imageUrl = "http://10.10.7.107:5004/";
 export const imageUrl = "http://72.60.117.99:5004/";
